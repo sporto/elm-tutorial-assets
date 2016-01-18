@@ -43,7 +43,6 @@ refreshFx =
     |> Task.map OnRefresh
     |> Effects.task
 
--- OK
 update : Action -> Model -> (Model, Effects.Effects Action)
 update action model =
   case Debug.log "action" action of

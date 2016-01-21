@@ -1,40 +1,55 @@
+import Effects exposing (Effects, Never)
 import Html
 import Html.Events as Events
+import Http
 import StartApp
-import Effects exposing (Effects, Never)
 import Task
-
-type alias Model = {
-    count : Int
-  }
 
 type Action =
   NoOp |
-  Increase
+  Refresh |
+  OnRefresh (Result Http.Error String)
 
-initialModel : Model
-initialModel = {
-    count = 0
-  }
+type alias Model = String
+
+view : Signal.Address Action -> Model -> Html.Html
+view address message =  
+  Html.div [] [
+    Html.button [
+      Events.onClick address Refresh
+    ]
+    [
+      Html.text "Refresh"
+    ],
+    Html.text message
+  ]
+
+httpTask : Task.Task Http.Error String
+httpTask =
+  Http.getString "http://localhost:3000/"
+
+refreshFx : Effects.Effects Action
+refreshFx =
+  httpTask
+    |> Task.toResult
+    |> Task.map OnRefresh
+    |> Effects.task
 
 init : (Model, Effects Action)
 init =
-  (initialModel, Effects.none)
+  ("", Effects.none)
 
-view : Signal.Address Action -> Model -> Html.Html
-view address model =
-  Html.div [] [
-    Html.div [] [ Html.text (toString model.count) ],
-    Html.button [
-      Events.onClick address Increase
-    ] [ Html.text "Click" ]
-  ]
-
-update : Action -> Model -> (Model, Effects Action)
+update : Action -> Model -> (Model, Effects.Effects Action)
 update action model =
-  case action ofit
-    Increase ->
-      ({model | count = model.count + 1}, Effects.none)
+  case Debug.log "action" action of
+    Refresh ->
+      (model, refreshFx)
+    OnRefresh result ->
+      let
+        message =
+          Result.withDefault "" result
+      in
+        (message, Effects.none)
     _ ->
       (model, Effects.none)
 
@@ -51,6 +66,6 @@ main: Signal.Signal Html.Html
 main =
   app.html
 
-port tasks : Signal (Task.Task Never ())
-port tasks =
+port runner : Signal (Task.Task Never ())
+port runner =
   app.tasks

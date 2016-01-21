@@ -1,1 +1,1 @@
-Code for https://github.com/sporto/web-apps-with-elm
+Assets and example code for http://www.elm-tutorial.org/

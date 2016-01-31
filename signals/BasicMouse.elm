@@ -1,9 +1,13 @@
+module Main (..) where
+
 import Html
 import Mouse
+
 
 view : Int -> Html.Html
 view x =
   Html.text (toString x)
+
 
 main : Signal.Signal Html.Html
 main =

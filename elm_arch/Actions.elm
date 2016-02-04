@@ -31,7 +31,7 @@ update action model =
     Increase ->
       { model | count = model.count + 1 }
 
-    _ ->
+    NoOp ->
       model
 
 

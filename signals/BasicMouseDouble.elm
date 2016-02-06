@@ -1,16 +1,22 @@
 module Main (..) where
 
-import Graphics.Element exposing (..)
+import Html
 import Mouse
 
 
 double x =
-  x * 2
+    x * 2
 
 
 doubleSignal =
-  Signal.map double Mouse.x
+    Signal.map double Mouse.x
 
 
+view : Int -> Html.Html
+view x =
+    Html.text (toString x)
+
+
+main : Signal.Signal Html.Html
 main =
-  Signal.map show doubleSignal
+    Signal.map view doubleSignal

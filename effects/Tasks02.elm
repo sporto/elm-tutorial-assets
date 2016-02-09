@@ -16,6 +16,7 @@ clockSignal =
   Time.every (2 * Time.second)
 
 
+mb : Signal.Mailbox String
 mb =
   Signal.mailbox ""
 

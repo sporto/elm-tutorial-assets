@@ -1,0 +1,33 @@
+@startuml
+participant JS
+participant "port runner" as PR
+participant askDeleteConfirmationMailbox as DCM
+participant getDeleteConfirmation
+participant StartApp as SA
+participant Main.Update as MU
+participant Main.View as MV
+participant Players.Update as PU
+participant Players.List as PL
+
+PL -> SA : 1. DeletePlayerIntent player
+SA -> MU : 2. PlayersActions (DeletePlayerIntent player)
+MU -> PU : 3. DeletePlayerIntent player
+PU --> DCM : 4. (playerId, msg)
+DCM -> JS : 5. (playerId, msg)
+JS -> getDeleteConfirmation : 6. playerId
+getDeleteConfirmation -> SA : 7. playerId
+SA -> MU : 8. PlayersActions (DeletePlayer playerId)
+MU -> PU : 9. DeletePlayer playerId
+PU --> MU : 10. delete effect
+MU --> SA : 11. delete effect
+SA --> PR : 12. delete effect
+PR -> SA : 13. response
+SA -> MU : 14. PlayersActions (DeletePlayerDone playerId)
+MU -> PU : 15. DeletePlayerDone playerId
+PU --> MU : 16. updated collection
+MU --> SA : 17. updated main model
+SA -> MV : 18. main model
+MV -> PL : 19. players
+PL --> MV : 20. rendered list
+MV --> SA : 21. renderer view
+@enduml

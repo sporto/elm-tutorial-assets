@@ -1,0 +1,24 @@
+@startuml
+participant "port runner" as PR
+participant StartApp as SA
+participant Main.Update as MU
+participant Main.View as MV
+participant Players.Update as PU
+participant Players.List as PL
+
+PL -> SA : 1. CreatePlayer
+SA -> MU : 2. PlayersActions CreatePlayer
+MU -> PU : 3. CreatePlayer
+PU --> MU : 4. create effect
+MU --> SA : 5. create effect
+SA -> PR : 6. create effect
+PR -> SA : 7. response
+SA -> MU : 8. PlayersAction (CreatePlayerDone result)
+MU -> PU : 9. CreatePlayerDone result
+PU --> MU : 10. updated collection
+MU --> SA : 11. updated main model
+SA -> MV : 12. app model
+MV -> PL : 13. players
+PL --> MV : 14. rendered list
+MV --> SA : 15. renderer view
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+participant actionsMailbox as AM
+participant StartApp as SA
+participant Main.Update as MU
+participant Main.View as MV
+participant Players.Update as PU
+
+MU -> PU: 1. FetchDone
+PU --> AM: 2. error
+AM -> SA: 3. ShowError msg
+SA -> MU: 4. ShowError msg
+MU --> SA: 5. model
+SA -> MV: 6. model
+MV --> SA: 7. rendered view
+@enduml

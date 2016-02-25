@@ -33,8 +33,7 @@ sendToMb result =
 
 runTask : Task.Task Http.Error ()
 runTask =
-  httpTask
-    |> (flip Task.andThen) sendToMb
+  Task.andThen httpTask sendToMb
 
 
 taskSignal : Signal (Task.Task Http.Error ())

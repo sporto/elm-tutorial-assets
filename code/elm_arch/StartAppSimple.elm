@@ -1,6 +1,6 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 import Html.Events as Events
 import StartApp.Simple
 
@@ -21,7 +21,7 @@ initialModel =
   }
 
 
-view : Signal.Address Action -> Model -> Html.Html
+view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     []
@@ -43,7 +43,7 @@ update action model =
       model
 
 
-main : Signal.Signal Html.Html
+main : Signal.Signal Html
 main =
   StartApp.Simple.start
     { model = initialModel

@@ -1,6 +1,6 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 import Mouse
 import Keyboard
 
@@ -22,7 +22,7 @@ initialModel =
   }
 
 
-view : Model -> Html.Html
+view : Model -> Html
 view model =
   Html.text (toString model.count)
 
@@ -60,6 +60,6 @@ modelSignal =
   Signal.foldp update initialModel actionSignal
 
 
-main : Signal.Signal Html.Html
+main : Signal.Signal Html
 main =
   Signal.map view modelSignal

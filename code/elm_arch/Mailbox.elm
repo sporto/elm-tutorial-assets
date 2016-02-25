@@ -1,6 +1,6 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 import Html.Events as Events
 
 
@@ -20,7 +20,7 @@ initialModel =
   }
 
 
-view : Signal.Address Action -> Model -> Html.Html
+view : Signal.Address Action -> Model -> Html
 view address model =
   Html.div
     []
@@ -47,6 +47,6 @@ modelSignal =
   Signal.foldp update initialModel mb.signal
 
 
-main : Signal.Signal Html.Html
+main : Signal.Signal Html
 main =
   Signal.map (view mb.address) modelSignal

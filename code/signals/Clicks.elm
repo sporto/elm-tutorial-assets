@@ -1,10 +1,10 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 import Mouse
 
 
-view : Int -> Html.Html
+view : Int -> Html
 view count =
   Html.text (toString count)
 
@@ -14,6 +14,6 @@ countSignal =
   Signal.map (always 1) Mouse.clicks
 
 
-main : Signal.Signal Html.Html
+main : Signal.Signal Html
 main =
   Signal.map view countSignal

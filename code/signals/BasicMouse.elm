@@ -1,14 +1,14 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 import Mouse
 
 
-view : Int -> Html.Html
+view : Int -> Html
 view x =
   Html.text (toString x)
 
 
-main : Signal.Signal Html.Html
+main : Signal.Signal Html
 main =
   Signal.map view Mouse.x

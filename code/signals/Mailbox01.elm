@@ -1,9 +1,9 @@
 module Main (..) where
 
-import Html
+import Html exposing (Html)
 
 
-view : String -> Html.Html
+view : String -> Html
 view message =
   Html.div
     []
@@ -17,6 +17,6 @@ messageSignal =
   Signal.constant "Hello"
 
 
-main : Signal Html.Html
+main : Signal Html
 main =
   Signal.map view messageSignal

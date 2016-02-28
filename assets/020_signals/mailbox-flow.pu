@@ -1,0 +1,12 @@
+@startuml
+participant mb
+participant main
+participant view
+
+main -> view : 1. address ""
+view --> main : 2. Rendered view
+view -> mb : 3. "Hello"
+mb -> main : 4. "Hello"
+main --> view : 5. address "Hello"
+view --> main : 6. Rendered view
+@enduml

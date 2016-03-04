@@ -1,0 +1,28 @@
+@startuml
+participant StartApp as SA
+participant Main.initialModel as Mim
+participant Main.view as MV
+participant Main.update as MU
+participant Widget.initialModel as Wim
+participant Widget.view as WV
+participant Widget.update as WU
+
+SA -> Mim: 1. initialModel
+Mim -> Wim: 2. initialModel
+Wim --> Mim: 3. widgetModel
+Mim --> SA: 4. mainModel
+SA -> MV : 5. mainAddress mainModel
+MV -> WV : 6. widgetAddress widgetModel
+WV --> MV : 7. Html
+MV --> SA : 8. Html
+
+WV -> SA: 9. Increase
+SA -> MU: 10. (WidgetAction Increase) mainModel
+MU -> WU : 11. Increase widgetModel
+WU --> MU: 12. updated widgetModel
+MU -> SA: 13. updated mainModel
+SA -> MV : 14. mainAddress mainModel
+MV -> WV : 15. widgetAddress widgetModel
+WV --> MV : 16. Html
+MV --> SA : 17. Html
+@enduml

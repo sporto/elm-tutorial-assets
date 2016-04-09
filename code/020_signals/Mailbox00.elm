@@ -16,30 +16,28 @@ mb =
   Signal.mailbox 0.0
 
 
-sendToMailbox : Time.Time -> Time.Time
+sendToMailbox : Time.Time -> (Task a ())
 sendToMailbox time =
   let
     _ =
       Debug.log "Sending" time
   in
     Signal.send mb.address time
-      |> always time
 
-
-countSignal : Signal Time.Time
-countSignal =
+signalTask : Signal (Task a ())
+signalTask =
   Signal.map sendToMailbox (Time.every Time.second)
 
 
 main : Signal Html
 main =
-  Signal.map view countSignal
+  Signal.map view mailboxListener
 
 
 mailboxListener =
   Signal.map (Debug.log "from mailbox") mb.signal
 
 
-port runner : Signal Time.Time
+port runner : Signal (Task a ())
 port runner =
-  mb.signal
+  signalTask
